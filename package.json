@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development",
+    "dev": "webpack-dev-server --open --config webpack.dev.conf.js",
     "dev:watch": "webpack --mode development --watch",
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.build.conf.js",
     "start": "webpack-dev-server --mode development --open"
   },
   "browserslists": [
@@ -23,9 +23,11 @@
     "@babel/preset-typescript": "^7.7.7",
     "autoprefixer": "^9.7.3",
     "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.0",
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.10",
+    "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -38,7 +40,8 @@
     "terser-webpack-plugin": "^2.3.1",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.1",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
