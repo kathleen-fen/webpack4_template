@@ -51,8 +51,8 @@ module.exports = {
             // hash:false, //default, not Necessarily
             filename: 'index.html',
             template: `${PATHS.src}/index.html`,
-            inject: false, // you can add css link in html by hand, not automatically
-            title: 'Webpack template'
+           // inject: false, // you can add css link in html by hand, not automatically
+            //title: 'Webpack template'
         }),
         new MiniCssExtractPlugin({
             filename: `${PATHS.assets}css/[name].[hash].css`
