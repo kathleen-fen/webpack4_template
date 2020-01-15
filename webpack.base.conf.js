@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin =  require('copy-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 const PATHS = {
     src: path.join(__dirname,'./src'),
@@ -32,7 +33,9 @@ module.exports = {
             new OptimizeCssAssetsPlugin({}), new TerserPlugin ({}),
         ]
       },
+    
     plugins: [
+        new VueLoaderPlugin(),
         new HtmlPlugin({
             hash:false,
             filename: 'index.html',
@@ -91,6 +94,16 @@ module.exports = {
           },
           { test: /\.js|ts$/, exclude: /node_modules/, loader: "babel-loader" },
           { 
+            test: /\.vue/, 
+            loader: "vue-loader",
+            options:{
+              loader: {
+                scss: 'vue-style-loader!css-loader!sass-loader'
+              }
+            } 
+          },
+
+          { 
               test: /\.(png|jpg|gif|svg)$/, 
               exclude: /node_modules/, 
               loader: "file-loader",
@@ -100,6 +113,12 @@ module.exports = {
              }
         ],
       },
+      resolve: {
+        alias: {
+          'vue$': 'vue/dist/vue.js'
+        }
+  
+      }  
 
     
 
