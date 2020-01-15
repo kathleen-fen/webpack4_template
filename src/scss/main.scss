@@ -1,3 +1,5 @@
+@import './utils/fonts.scss';
+@import './utils/vars.scss';
 h1 {
     color:green;
 }
@@ -6,4 +8,8 @@ h1 {
 .wrapper {
     display: flex;
     
+}
+
+p {
+    font-family: $mainFont;
 }

@@ -60,6 +60,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {from: `${PATHS.src}/img`, to: `${PATHS.assets}img`},
+            {from: `${PATHS.src}/fonts`, to: `${PATHS.assets}fonts`},
             {from: `${PATHS.src}/static`, to: ''}
 
         ])
@@ -121,9 +122,17 @@ module.exports = {
               exclude: /node_modules/, 
               loader: "file-loader",
               options: {
-                  name: '[name].[ext]'
+              name: '[name].[ext]'
               }
-             }
+          },
+          { 
+            test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, 
+            exclude: /node_modules/, 
+            loader: "file-loader",
+            options: {
+            name: '[name].[ext]'
+            }
+        }
         ],
       },
       resolve: {
