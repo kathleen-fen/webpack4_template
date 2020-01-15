@@ -19,16 +19,27 @@ module.exports = {
     },
     mode: 'production',
     entry: {
-      app: PATHS.src
+      app: PATHS.src,
+      lk: `${PATHS.src}/lk.js`
     },  
     output: {
         // filename: '[name].js',
         // path: path.resolve(__dirname, 'dist')
-        filename:  `${PATHS.assets}js/[name].js`,
+        filename:  `${PATHS.assets}js/[name].[hash].js`,
         path: PATHS.dist,
         publicPath: '/'
     },
     optimization: {
+        splitChunks: {
+          cacheGroups:{
+            vendor: {
+              name: 'vendors',
+              test: /node_modules/,
+              chunks: 'all',              
+              enforce: true
+            }
+          }
+        },
         minimizer: [
             new OptimizeCssAssetsPlugin({}), new TerserPlugin ({}),
         ]
@@ -37,12 +48,14 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlPlugin({
-            hash:false,
+            // hash:false, //default, not Necessarily
             filename: 'index.html',
-            template: `${PATHS.src}/index.html`
+            template: `${PATHS.src}/index.html`,
+            inject: false, // you can add css link in html by hand, not automatically
+            title: 'Webpack template'
         }),
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}css/[name].css`
+            filename: `${PATHS.assets}css/[name].[hash].css`
 
         }),
         new CopyWebpackPlugin([
