@@ -1,4 +1,5 @@
 const path =  require('path')
+const fs = require('fs')
 const HtmlPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -11,6 +12,9 @@ const PATHS = {
     dist: path.join(__dirname,'./dist'),
     assets: 'assets/'
 }
+
+const PAGES_DIR = `${PATHS.src}/pug/pages/`
+const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'))
 
 module.exports = {
 
@@ -47,13 +51,13 @@ module.exports = {
     
     plugins: [
         new VueLoaderPlugin(),
-        new HtmlPlugin({
+        /* new HtmlPlugin({
             // hash:false, //default, not Necessarily
             filename: 'index.html',
             template: `${PATHS.src}/index.html`,
            // inject: false, // you can add css link in html by hand, not automatically
             //title: 'Webpack template'
-        }),
+        }), */
         new MiniCssExtractPlugin({
             filename: `${PATHS.assets}css/[name].[hash].css`
 
@@ -63,7 +67,11 @@ module.exports = {
             {from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts`},
             {from: `${PATHS.src}/static`, to: ''}
 
-        ])
+        ]),
+        ...PAGES.map(page => new HtmlPlugin({
+          template: `${PAGES_DIR}/${page}`,
+          filename: `./${page.replace(/\.pug/,'.html')}`
+        }))
     ],
     resolve: {
       extensions: ['.js','.ts']
@@ -79,10 +87,15 @@ module.exports = {
               loader:'css-loader',
               options: {sourceMap:true}
             },
+            
             {
               loader:'postcss-loader',
               options: {sourceMap:true}
             }],
+          },
+          {
+            test: /\.pug$/,
+            loader: 'pug-loader'
           },
           {
             test: /\.less$/i,

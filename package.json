@@ -35,6 +35,8 @@
     "node-sass": "^4.13.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "pug": "^2.0.4",
+    "pug-loader": "^2.4.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
     "terser-webpack-plugin": "^2.3.1",
